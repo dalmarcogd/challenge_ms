@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go/request"
+
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/api/parameters"
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/core/authentication"
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
@@ -39,7 +41,7 @@ func RefreshToken(requestUser *models.User) []byte {
 
 func Logout(req *http.Request) error {
 	authBackend := authentication.InitJWTAuthenticationBackend()
-	tokenRequest, err := jwt.ParseFromRequest(req, func(token *jwt.Token) (interface{}, error) {
+	tokenRequest, err := request.ParseFromRequest(req, request.OAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
 		return authBackend.PublicKey, nil
 	})
 	if err != nil {
