@@ -7,6 +7,5 @@ import (
 func InitRoutes() *mux.Router {
 	router := mux.NewRouter()
 	router = SetFinancialTransationsRoutes(router)
-	router = SetAuthenticationRoutes(router)
 	return router
 }

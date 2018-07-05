@@ -5,11 +5,9 @@ import (
 
 	"github.com/codegangsta/negroni"
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/routers"
-	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/settings"
 )
 
 func main() {
-	settings.Init()
 	router := routers.InitRoutes()
 	n := negroni.Classic()
 	n.UseHandler(router)
