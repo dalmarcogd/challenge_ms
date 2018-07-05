@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="jdbc:postgresql://35.198.16.158@gymapp-ae608:gymappdb-01:5432/postgres" uuid="04e1a1a8-1728-4797-affb-a960e0bb0b17">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://35.198.16.158@gymapp-ae608:gymappdb-01:5432/postgres</jdbc-url>
+    </data-source>
+  </component>
+</project>
