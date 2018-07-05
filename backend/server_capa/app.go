@@ -8,7 +8,6 @@ import (
 
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/config"
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/dao"
-	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
 	"github.com/gorilla/mux"
 )
 
@@ -22,7 +21,7 @@ func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJson(w, http.StatusOK, financialTransactions)
+	respondWithJSON(w, http.StatusOK, financialTransactions)
 }
 
 // FindFinancialTransactionsEndpoint - List all data financial transactions by cpf
@@ -34,7 +33,7 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 	respondWithJson(w, code, map[string]string{"error": msg})
 }
 
-func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
