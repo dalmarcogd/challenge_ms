@@ -15,7 +15,7 @@ var config = Config{}
 var dao = FinancialTransactionsDAO{}
 
 // AllFinancialTransactionsEndPoint - List all data financial transactions
-func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
+func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	financialTransactions, err := dao.FindAll()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
@@ -25,7 +25,7 @@ func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
 }
 
 // FindFinancialTransactionsEndpoint - List all data financial transactions by cpf
-func FindFinancialTransactionsEndpoint(w http.ResponseWriter, r *http.Request) {
+func FindFinancialTransactionsEndpoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	params := mux.Vars(r)
 	movie, err := dao.FindByID(params["id"])
 	if err != nil {
@@ -36,7 +36,7 @@ func FindFinancialTransactionsEndpoint(w http.ResponseWriter, r *http.Request) {
 }
 
 // CreateFinancialTransactionsEndPoint a new movie
-func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
+func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
 	var financialTransaction FinancialTransaction
 	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
@@ -52,7 +52,7 @@ func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request)
 }
 
 // UpdateFinancialTransactionsEndPoint update an existing movie
-func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
+func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
 	var financialTransaction FinancialTransaction
 	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
@@ -67,7 +67,7 @@ func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request)
 }
 
 // DeleteFinancialTransactionsEndPoint an existing movie
-func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
+func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
 	var movie FinancialTransaction
 	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
