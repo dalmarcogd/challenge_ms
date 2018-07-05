@@ -3,11 +3,12 @@ package dao
 import (
 	"log"
 
-	. "github.com/dalmarcogd/challenge_ms-restapi/backend/server_capa/src/models"
+	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
+// FinancialTransactionsDAO dao struct
 type FinancialTransactionsDAO struct {
 	Server   string
 	Database string
@@ -16,10 +17,11 @@ type FinancialTransactionsDAO struct {
 var db *mgo.Database
 
 const (
+	// COLLECTION name of collection
 	COLLECTION = "FinancialTransactions"
 )
 
-// Establish a connection to database
+// Connect Establish a connection to database
 func (m *FinancialTransactionsDAO) Connect() {
 	session, err := mgo.Dial(m.Server)
 	if err != nil {
@@ -28,15 +30,15 @@ func (m *FinancialTransactionsDAO) Connect() {
 	db = session.DB(m.Database)
 }
 
-// Find list of FinancialTransactions
+// FindAll list of FinancialTransactions
 func (m *FinancialTransactionsDAO) FindAll() ([]FinancialTransaction, error) {
 	var FinancialTransactions []FinancialTransaction
 	err := db.C(COLLECTION).Find(bson.M{}).All(&FinancialTransactions)
 	return FinancialTransactions, err
 }
 
-// Find a FinancialTransaction by its id
-func (m *FinancialTransactionsDAO) FindById(id string) (FinancialTransaction, error) {
+// FindByID a FinancialTransaction by its id
+func (m *FinancialTransactionsDAO) FindByID(id string) (FinancialTransaction, error) {
 	var FinancialTransaction FinancialTransaction
 	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&FinancialTransaction)
 	return FinancialTransaction, err
