@@ -30,6 +30,7 @@ func Init() {
 }
 
 func LoadSettingsByEnv(env string) {
+	fmt.Println("vai ler")
 	//content, err := ioutil.ReadFile(environments[env])
 	//if err != nil {
 	//fmt.Println("Error while reading config file", err)
