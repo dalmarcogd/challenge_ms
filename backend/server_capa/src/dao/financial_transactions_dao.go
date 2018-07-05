@@ -32,16 +32,16 @@ func (m *FinancialTransactionsDAO) Connect() {
 
 // FindAll list of FinancialTransactions
 func (m *FinancialTransactionsDAO) FindAll() ([]FinancialTransaction, error) {
-	var FinancialTransactions []FinancialTransaction
-	err := db.C(COLLECTION).Find(bson.M{}).All(&FinancialTransactions)
-	return FinancialTransactions, err
+	var financialTransactions []FinancialTransaction
+	err := db.C(COLLECTION).Find(bson.M{}).All(&financialTransactions)
+	return financialTransactions, err
 }
 
-// FindByID a FinancialTransaction by its id
+// Find a movie by its id
 func (m *FinancialTransactionsDAO) FindByID(id string) (FinancialTransaction, error) {
-	var FinancialTransaction FinancialTransaction
-	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&FinancialTransaction)
-	return FinancialTransaction, err
+	var financialTransaction FinancialTransaction
+	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&financialTransaction)
+	return financialTransaction, err
 }
 
 // Insert a FinancialTransaction into database

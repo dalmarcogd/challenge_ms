@@ -8,7 +8,9 @@ import (
 
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/config"
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/dao"
+	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
 	"github.com/gorilla/mux"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var config = Config{}
@@ -26,11 +28,63 @@ func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
 
 // FindFinancialTransactionsEndpoint - List all data financial transactions by cpf
 func FindFinancialTransactionsEndpoint(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "not implemented yet !")
+	params := mux.Vars(r)
+	movie, err := dao.FindByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Movie ID")
+		return
+	}
+	respondWithJSON(w, http.StatusOK, movie)
+}
+
+// CreateFinancialTransactionsEndPoint a new movie
+func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var financialTransaction FinancialTransaction
+	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	financialTransaction.ID = bson.NewObjectId()
+	if err := dao.Insert(financialTransaction); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJSON(w, http.StatusCreated, financialTransaction)
+}
+
+// UpdateFinancialTransactionsEndPoint update an existing movie
+func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var financialTransaction FinancialTransaction
+	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	if err := dao.Update(financialTransaction); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
+}
+
+// DeleteFinancialTransactionsEndPoint an existing movie
+func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var movie FinancialTransaction
+	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	if err := dao.Delete(movie); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
-	respondWithJson(w, code, map[string]string{"error": msg})
+	respondWithJSON(w, code, map[string]string{"error": msg})
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
@@ -52,7 +106,12 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/financial-transactions", AllFinancialTransactionsEndPoint).Methods("GET")
 	r.HandleFunc("/financial-transactions/{cpf}", FindFinancialTransactionsEndpoint).Methods("GET")
+	r.HandleFunc("/financial-transactions", CreateFinancialTransactionsEndPoint).Methods("POST")
+	r.HandleFunc("/financial-transactions", UpdateFinancialTransactionsEndPoint).Methods("PUT")
+	r.HandleFunc("/financial-transactions", DeleteFinancialTransactionsEndPoint).Methods("DELETE")
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		log.Fatal(err)
+	} else {
+		fmt.Println("Run on 127.0.0.1:3000")
 	}
 }
