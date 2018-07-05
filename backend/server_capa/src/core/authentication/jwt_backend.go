@@ -5,11 +5,11 @@ import (
 	"crypto/x509"
 	"time"
 
-	"code.google.com/p/go-uuid/uuid"
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/core/redis"
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/settings"
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/pborman/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -37,9 +37,9 @@ func InitJWTAuthenticationBackend() *JWTAuthenticationBackend {
 }
 func (backend *JWTAuthenticationBackend) GenerateToken(userUUID string) (string, error) {
 	token := jwt.New(jwt.SigningMethodRS512)
-	token.Claims["exp"] = time.Now().Add(time.Hour * time.Duration(settings.Get().JWTExpirationDelta)).Unix()
-	token.Claims["iat"] = time.Now().Unix()
-	token.Claims["sub"] = userUUID
+	token.Header["exp"] = time.Now().Add(time.Hour * time.Duration(settings.Get().JWTExpirationDelta)).Unix()
+	token.Header["iat"] = time.Now().Unix()
+	token.Header["sub"] = userUUID
 	tokenString, err := token.SignedString(backend.privateKey)
 	if err != nil {
 		panic(err)
@@ -70,7 +70,7 @@ func (backend *JWTAuthenticationBackend) getTokenRemainingValidity(timestamp int
 }
 func (backend *JWTAuthenticationBackend) Logout(tokenString string, token *jwt.Token) error {
 	redisConn := redis.Connect()
-	return redisConn.SetValue(tokenString, tokenString, backend.getTokenRemainingValidity(token.Claims["exp"]))
+	return redisConn.SetValue(tokenString, tokenString, backend.getTokenRemainingValidity(token.Header["exp"]))
 }
 func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
 	redisConn := redis.Connect()
@@ -83,9 +83,9 @@ func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
 	return true
 }
 func getPrivateKey() *rsa.PrivateKey {
-	privateKey, err := settings.Get().PrivateKeyPath
+	privateKey := settings.Get().PrivateKeyPath
 
-	privateKeyImported, err := x509.ParsePKCS1PrivateKey(privateKey.Bytes)
+	privateKeyImported, err := x509.ParsePKCS1PrivateKey([]byte(privateKey))
 
 	if err != nil {
 		panic(err)
@@ -94,9 +94,9 @@ func getPrivateKey() *rsa.PrivateKey {
 	return privateKeyImported
 }
 func getPublicKey() *rsa.PublicKey {
-	publicKey, err := settings.Get().PublicKeyPath
+	publicKey := settings.Get().PublicKeyPath
 
-	publicKeyImported, err := x509.ParsePKIXPublicKey(publicKey.Bytes)
+	publicKeyImported, err := x509.ParsePKIXPublicKey([]byte(publicKey))
 
 	if err != nil {
 		panic(err)
