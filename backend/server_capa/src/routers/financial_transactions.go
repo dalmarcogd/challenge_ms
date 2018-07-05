@@ -12,7 +12,7 @@ func SetFinancialTransationsRoutes(router *mux.Router) *mux.Router {
 	router.Handle("/financial-transactions",
 		negroni.New(
 			negroni.HandlerFunc(authentication.RequireTokenAuthentication),
-			negroni.HandlerFunc(controllers.HelloController),
+			negroni.HandlerFunc(controllers.AllFinancialTransactionsEndPoint),
 		)).Methods("GET")
 
 	router.Handle("/financial-transactions/{id}",
