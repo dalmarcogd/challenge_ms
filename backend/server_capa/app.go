@@ -5,13 +5,19 @@ import (
 	"log"
 	"net/http"
 
+	. "github.com/dalmarcogd/challenge_ms-restapi/backend/server_capa/src/dao"
+	. "github.com/dalmarcogd/challenge_ms-restapi/backend/server_capa/src/models"
 	"github.com/gorilla/mux"
 )
 
 // AllFinancialTransactionsEndPoint - List all data financial transactions
 func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "not implemented yet !")
-	Financuak
+	financialTransactions, err := dao.FindAll()
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusOK, financialTransactions)
 }
 
 // FindFinancialTransactionsEndpoint - List all data financial transactions by cpf

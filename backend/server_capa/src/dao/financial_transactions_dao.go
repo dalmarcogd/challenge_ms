@@ -2,14 +2,12 @@ package dao
 
 import (
 	"log"
-	"github.com/dalmarcogd/challenge_ms/models"
 
-
+	. "github.com/dalmarcogd/challenge_ms-restapi/backend/server_capa/src/models"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
-// FinancialTransactionsDAO - Dao that resposible to keep the FinancialTransaction
 type FinancialTransactionsDAO struct {
 	Server   string
 	Database string
@@ -18,11 +16,10 @@ type FinancialTransactionsDAO struct {
 var db *mgo.Database
 
 const (
-	// COLLECTION - the name of collection
-	COLLECTION = "financial_transactions"
+	COLLECTION = "FinancialTransactions"
 )
 
-// Connect - Conection with db server
+// Establish a connection to database
 func (m *FinancialTransactionsDAO) Connect() {
 	session, err := mgo.Dial(m.Server)
 	if err != nil {
@@ -31,14 +28,34 @@ func (m *FinancialTransactionsDAO) Connect() {
 	db = session.DB(m.Database)
 }
 
+// Find list of FinancialTransactions
 func (m *FinancialTransactionsDAO) FindAll() ([]FinancialTransaction, error) {
-	var fiancialTransactions []FinancialTransaction
-	err := db.C(COLLECTION).Find(bson.M{}).All(&fiancialTransactions)
-	return fiancialTransactions, err
+	var FinancialTransactions []FinancialTransaction
+	err := db.C(COLLECTION).Find(bson.M{}).All(&FinancialTransactions)
+	return FinancialTransactions, err
 }
 
-func (m *FinancialTransactionsDAO) FindByCpf(cpf string) ([]FinancialTransaction, error) {
-	var fiancialTransactions []FinancialTransaction
-	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(cpf)).One(&FinancialTransaction)
-	return fiancialTransactions, err
+// Find a FinancialTransaction by its id
+func (m *FinancialTransactionsDAO) FindById(id string) (FinancialTransaction, error) {
+	var FinancialTransaction FinancialTransaction
+	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&FinancialTransaction)
+	return FinancialTransaction, err
+}
+
+// Insert a FinancialTransaction into database
+func (m *FinancialTransactionsDAO) Insert(FinancialTransaction FinancialTransaction) error {
+	err := db.C(COLLECTION).Insert(&FinancialTransaction)
+	return err
+}
+
+// Delete an existing FinancialTransaction
+func (m *FinancialTransactionsDAO) Delete(FinancialTransaction FinancialTransaction) error {
+	err := db.C(COLLECTION).Remove(&FinancialTransaction)
+	return err
+}
+
+// Update an existing FinancialTransaction
+func (m *FinancialTransactionsDAO) Update(FinancialTransaction FinancialTransaction) error {
+	err := db.C(COLLECTION).UpdateId(FinancialTransaction.ID, &FinancialTransaction)
+	return err
 }

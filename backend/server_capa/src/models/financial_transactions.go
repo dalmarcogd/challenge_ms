@@ -1,4 +1,4 @@
-package financialtransactions
+package models
 
 import (
 	"time"
