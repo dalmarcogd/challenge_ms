@@ -1,0 +1,5 @@
+{
+  "PrivateKeyPath": "C:/Users/gjld/Development/Repositories/GitHub/challenge_ms/backend/server_capa/src/settings/keys/private_key",
+  "PublicKeyPath": "C:/Users/gjld/Development/Repositories/GitHub/challenge_ms/backend/server_capa/src/settings/keys/public_key.pub",
+  "JWTExpirationDelta": 72
+}
