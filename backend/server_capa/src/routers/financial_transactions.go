@@ -2,8 +2,8 @@ package routers
 
 import (
 	"github.com/codegangsta/negroni"
-	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/authentication"
 	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/controllers"
+	"github.com/dalmarcogd/challenge_ms/backend/server_capa/src/core/authentication"
 	"github.com/gorilla/mux"
 )
 
