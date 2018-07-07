@@ -12,6 +12,7 @@ class UserSerializer(serializers.BaseSerializer):
         fields = '__all__'
         validators = []
 
+    @transaction.atomic()
     def create(self, validated_data):
         return models.UserModel.objects.create(**validated_data)
 

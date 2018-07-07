@@ -49,7 +49,7 @@ if settings.DEBUG:
 
 api_router = routers.DefaultRouter()
 api_router.register(r'users', view_sets.UserViewSet)
-api_router.register(r'equipments', view_sets.EquipmentViewSet)
+api_router.register(r'customers', view_sets.CustomerViewSet)
 
 api_public_router = routers.DefaultRouter()
 api_public_router.register(r'users', view_sets.PublicUserViewSet)

@@ -1,0 +1,10 @@
+#FROM python:3
+FROM gcr.io/google-appengine/python
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /www
+WORKDIR /www
+ADD requirements.txt /www/
+RUN pip3 install -r requirements.txt
+ADD . /www/
+EXPOSE $PORT
+CMD python manage.py runserver 0.0.0.0:$PORT

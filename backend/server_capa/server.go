@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/codegangsta/negroni"
@@ -11,5 +12,6 @@ func main() {
 	router := routers.InitRoutes()
 	n := negroni.Classic()
 	n.UseHandler(router)
-	http.ListenAndServe(":5000", n)
+	fmt.Println("Listen on http://127.0.0.1:8003")
+	http.ListenAndServe(":8003", n)
 }

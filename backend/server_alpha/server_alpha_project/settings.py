@@ -94,7 +94,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     ],
-    'EXCEPTION_HANDLER': 'server_alpha.exceptions.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'server_alpha_app.exceptions.custom_exception_handler'
 
 }
 

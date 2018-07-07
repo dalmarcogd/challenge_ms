@@ -10,7 +10,7 @@ class BaseViewSet(viewsets.ModelViewSet,  ProtectedResourceView):
     authentication_classes = [rest_framework.OAuth2Authentication, authentication.SessionAuthentication]
     permission_classes = [rest_condition.Or(rest_framework.IsAuthenticatedOrTokenHasScope)]
     required_scopes = ['read', 'write']
-
+    
     def get_search_fields(self):
         """
         Return the fields that maybe be used to filter

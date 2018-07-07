@@ -4,7 +4,6 @@ from django.http import response
 import json
 
 
-# Create your view_sets here.
 class UserViewSet(view_sets.BaseViewSet):
     serializer_class = serializers.UserSerializer
     queryset = models.UserModel.objects.all()
@@ -14,7 +13,7 @@ class UserViewSet(view_sets.BaseViewSet):
 class PublicUserViewSet(view_sets.PublicBaseViewSet, mixins.CreateModelMixin, mixins.ListModelMixin):
     serializer_class = serializers.UserSerializer
     queryset = models.UserModel.objects.all()
-    required_scopes = ['read', 'write']
+    required_scopes = ['read']
 
 
 

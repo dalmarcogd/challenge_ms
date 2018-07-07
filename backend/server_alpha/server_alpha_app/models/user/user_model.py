@@ -9,6 +9,8 @@ class UserModel(models_auth.AbstractUser, server_alpha_app_models.BaseModel):
     """
     class Meta:
         db_table = "user"
+        indexes = [
+            models.Index(fields=['username'], name='username_idx'),
+        ]
 
-    name = models.CharField(max_length=100)
     objects = managers.UserManager()

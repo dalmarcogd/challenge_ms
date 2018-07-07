@@ -1,3 +1,3 @@
 from .base import *
-from .equipment import *
+from .customer import *
 from .user import *
