@@ -37,7 +37,7 @@ func (m *LastPurchasesDAO) FindByID(id string) (LastPurchase, error) {
 	return lastPurchase, err
 }
 
-// FindByQuery a LastPurchase by its id
+// FindByQuery list of LastPurchases
 func (m *LastPurchasesDAO) FindByQuery(query interface{}) ([]LastPurchase, error) {
 	var lastPurchases []LastPurchase
 	err := db.C("LastPurchases").Find(query).All(&lastPurchases)
