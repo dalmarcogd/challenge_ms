@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/dao"
@@ -11,6 +12,7 @@ import (
 )
 
 var daoFinancialTransactions = FinancialTransactionsDAO{}
+var daoLastPurchases = LastPurchasesDAO{}
 
 // AllFinancialTransactionsEndPoint - List all data financial transactions
 func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
@@ -47,6 +49,37 @@ func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	if financialTransaction.Type == "Debit" && financialTransaction.PaymentType == "CreditCard" {
+		lastPurchases, err = daoLastPurchases.FindByQuery(bson.M{"Cpf": financialTransaction.Cpf})
+		var lastPurchase LastPurchase
+		lastPurchase.ID = bson.NewObjectId()
+		var isNew = true
+		if len(lastPurchases) > 0 {
+			lastPurchase = lastPurchases[:0]
+			isNew = false
+		}
+
+		lastPurchase.Cpf = financialTransaction.Cpf
+		lastPurchase.Date = financialTransaction.Date
+		lastPurchase.Description = financialTransaction.Description
+		lastPurchase.PaymentType = financialTransaction.PaymentType
+
+		if isNew {
+			if err := daoLastPurchases.Insert(lastPurchase); err != nil {
+				fmt.Println("Error when persist new last customer purchase...")
+			} else {
+				fmt.Println("Success persisted new last customer purchase...")
+			}
+		} else {
+			if err := daoLastPurchases.Update(lastPurchase); err != nil {
+				fmt.Println("Error when update last customer purchase...")
+			} else {
+				fmt.Println("Success updated last customer purchase...")
+			}
+		}
+	}
+
 	respondWithJSON(w, http.StatusCreated, financialTransaction)
 }
 
@@ -68,12 +101,12 @@ func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 // DeleteFinancialTransactionsEndPoint an existing financialTransaction
 func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
-	var movie FinancialTransaction
-	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
+	var financialTransaction FinancialTransaction
+	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := daoFinancialTransactions.Delete(movie); err != nil {
+	if err := daoFinancialTransactions.Delete(financialTransaction); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

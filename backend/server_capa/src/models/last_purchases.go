@@ -13,4 +13,5 @@ type LastPurchase struct {
 	Value       float64       `bson:"value" json:"value"`
 	Date        time.Time     `bson:"date" json:"date"`
 	Cpf         string        `bson:"cpf" json:"cpf"`
+	PaymentType string        `bson:"PaymentType" json:"PaymentType"` // CreditCard
 }

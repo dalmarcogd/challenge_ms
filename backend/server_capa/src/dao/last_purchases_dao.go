@@ -25,16 +25,23 @@ func (m *LastPurchasesDAO) Connect() {
 
 // FindAll list of LastPurchases
 func (m *LastPurchasesDAO) FindAll() ([]LastPurchase, error) {
-	var LastPurchases []LastPurchase
-	err := db.C("LastPurchases").Find(bson.M{}).All(&LastPurchases)
-	return LastPurchases, err
+	var lastPurchases []LastPurchase
+	err := db.C("LastPurchases").Find(bson.M{}).All(&lastPurchases)
+	return lastPurchases, err
 }
 
-// FindByID a movie by its id
+// FindByID a LastPurchase by its id
 func (m *LastPurchasesDAO) FindByID(id string) (LastPurchase, error) {
 	var lastPurchase LastPurchase
 	err := db.C("LastPurchases").FindId(bson.ObjectIdHex(id)).One(&lastPurchase)
 	return lastPurchase, err
+}
+
+// FindByQuery a LastPurchase by its id
+func (m *LastPurchasesDAO) FindByQuery(query interface{}) ([]LastPurchase, error) {
+	var lastPurchases []LastPurchase
+	err := db.C("LastPurchases").Find(query).All(&lastPurchases)
+	return lastPurchases, err
 }
 
 // Insert a LastPurchase into database
