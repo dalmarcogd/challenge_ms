@@ -24,9 +24,10 @@ func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, ne
 	}
 	if val, ok := params["cpf"]; ok {
 		var consultedCPF ConsultedCPF
-		consultedCPF.Cpf = params["cpf"]
+		consultedCPF.Cpf = val
 		consultedCPF.Date = time.Now()
 		consultedCPF.Description = "Financial transactions by CPF."
+		daoConsultedCPFs.Insert(consultedCPF)
 	}
 
 	respondWithJSON(w, http.StatusOK, financialTransactions)
