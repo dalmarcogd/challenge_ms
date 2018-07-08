@@ -27,7 +27,12 @@ func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, ne
 		consultedCPF.Cpf = val
 		consultedCPF.Date = time.Now()
 		consultedCPF.Description = "Financial transactions by CPF."
-		daoConsultedCPFs.Insert(consultedCPF)
+
+		if err := daoConsultedCPFs.Insert(consultedCPF); err != nil {
+			fmt.Println("Error when consulted CPF...")
+		} else {
+			fmt.Println("Success persisted new cosnulted CPF...")
+		}
 	}
 
 	respondWithJSON(w, http.StatusOK, financialTransactions)

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -27,7 +28,11 @@ func AllLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.
 		consultedCPF.Cpf = val
 		consultedCPF.Date = time.Now()
 		consultedCPF.Description = "Last customer purchase by CPF."
-		daoConsultedCPFs.Insert(consultedCPF)
+		if err := daoConsultedCPFs.Insert(consultedCPF); err != nil {
+			fmt.Println("Error when consulted CPF...")
+		} else {
+			fmt.Println("Success persisted new cosnulted CPF...")
+		}
 	}
 
 	respondWithJSON(w, http.StatusOK, lastPurchases)
