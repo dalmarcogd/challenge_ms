@@ -14,7 +14,8 @@ var daoLastPurchases = LastPurchasesDAO{}
 
 // AllLastPurchasesEndPoint - List all data financial transactions
 func AllLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	lastPurchases, err := daoLastPurchases.FindAll()
+	params := mux.Vars(r)
+	lastPurchases, err := daoLastPurchases.FindAll(params)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return

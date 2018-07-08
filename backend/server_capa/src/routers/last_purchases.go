@@ -12,7 +12,7 @@ func SetLastPurchasesRoutes(router *mux.Router) *mux.Router {
 	router.Handle("/last-purchases",
 		negroni.New(
 			negroni.HandlerFunc(controllers.AllLastPurchasesEndPoint),
-		)).Methods("GET")
+		)).Methods("GET").Queries("cpf", "{cpf:[0-9]+}")
 
 	router.Handle("/last-purchases/{id}",
 		negroni.New(
