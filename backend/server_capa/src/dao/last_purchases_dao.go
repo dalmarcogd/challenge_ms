@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"log"
 
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
@@ -40,7 +41,8 @@ func (m *LastPurchasesDAO) FindByID(id string) (LastPurchase, error) {
 // FindByQuery list of LastPurchases
 func (m *LastPurchasesDAO) FindByQuery(query interface{}) ([]LastPurchase, error) {
 	var lastPurchases []LastPurchase
-	err := db.C("LastPurchases").Find(query).All(&lastPurchases)
+	fmt.Println(query)
+	err := db.C("LastPurchases").Find(&query).All(&lastPurchases)
 	return lastPurchases, err
 }
 
