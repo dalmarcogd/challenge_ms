@@ -9,7 +9,7 @@ import (
 )
 
 // ConsultedCPFDAO dao struct
-type ConsultedCPFsDAO struct {
+type ConsultedCPFDAO struct {
 	Server   string
 	Database string
 }
