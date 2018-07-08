@@ -30,6 +30,13 @@ func (m *FinancialTransactionsDAO) FindAll() ([]FinancialTransaction, error) {
 	return financialTransactions, err
 }
 
+// FindByQuery list of LastPurchases
+func (m *LastPurchasesDAO) FindByQuery(query interface{}) ([]FinancialTransaction, error) {
+	var financialTransactions []FinancialTransaction
+	err := db.C("FinancialTransactions").Find(query).All(&financialTransactions)
+	return financialTransactions, err
+}
+
 // FindByID a FinancialTransaction by its id
 func (m *FinancialTransactionsDAO) FindByID(id string) (FinancialTransaction, error) {
 	var financialTransaction FinancialTransaction

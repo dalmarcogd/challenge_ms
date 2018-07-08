@@ -6,12 +6,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// SetFinancialTransationsRoutes - Register the routes to FinancialTransaction
 func SetFinancialTransationsRoutes(router *mux.Router) *mux.Router {
 
 	router.Handle("/financial-transactions",
 		negroni.New(
 			negroni.HandlerFunc(controllers.AllFinancialTransactionsEndPoint),
-		)).Methods("GET")
+		)).Methods("GET").Queries("cpf", "{cpf:[a-zA-Z0-9_]+}")
 
 	router.Handle("/financial-transactions/{id}",
 		negroni.New(
