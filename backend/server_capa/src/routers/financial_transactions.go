@@ -9,14 +9,9 @@ import (
 // SetFinancialTransationsRoutes - Register the routes to FinancialTransaction
 func SetFinancialTransationsRoutes(router *mux.Router) *mux.Router {
 
-	router.Handle("/financial-transactions",
+	router.Handle("/financial-transactions/{cpf}",
 		negroni.New(
 			negroni.HandlerFunc(controllers.AllFinancialTransactionsEndPoint),
-		)).Methods("GET").Queries("cpf", "{cpf:[0-9]+}")
-
-	router.Handle("/financial-transactions/{id}",
-		negroni.New(
-			negroni.HandlerFunc(controllers.FindFinancialTransactionsEndpoint),
 		)).Methods("GET")
 
 	router.Handle("/financial-transactions",
