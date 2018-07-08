@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 
-	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/config"
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/dao"
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
 	"github.com/gorilla/mux"
