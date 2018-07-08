@@ -24,9 +24,9 @@ func (m *FinancialTransactionsDAO) Connect() {
 }
 
 // FindAll list of FinancialTransactions
-func (m *FinancialTransactionsDAO) FindAll() ([]FinancialTransaction, error) {
+func (m *FinancialTransactionsDAO) FindAll(query interface{}) ([]FinancialTransaction, error) {
 	var financialTransactions []FinancialTransaction
-	err := db.C("FinancialTransactions").Find(bson.M{}).All(&financialTransactions)
+	err := db.C("FinancialTransactions").Find(query).All(&financialTransactions)
 	return financialTransactions, err
 }
 
