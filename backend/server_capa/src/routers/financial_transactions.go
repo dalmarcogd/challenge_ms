@@ -12,7 +12,7 @@ func SetFinancialTransationsRoutes(router *mux.Router) *mux.Router {
 	router.Handle("/financial-transactions",
 		negroni.New(
 			negroni.HandlerFunc(controllers.AllFinancialTransactionsEndPoint),
-		)).Methods("GET").Queries("cpf", "{cpf:[a-zA-Z0-9_]+}")
+		)).Methods("GET").Queries("cpf", "{cpf:[a-zA-Z0-9]*}")
 
 	router.Handle("/financial-transactions/{id}",
 		negroni.New(
