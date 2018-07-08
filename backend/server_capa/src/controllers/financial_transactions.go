@@ -15,6 +15,8 @@ var daoFinancialTransactions = FinancialTransactionsDAO{}
 
 // AllFinancialTransactionsEndPoint - List all data financial transactions
 func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	params := mux.Vars(r)
+	fmt.Println(params)
 	financialTransactions, err := daoFinancialTransactions.FindAll()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
