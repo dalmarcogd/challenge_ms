@@ -24,7 +24,7 @@ func AllLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.
 
 	if val, ok := params["cpf"]; ok {
 		var consultedCPF ConsultedCPF
-		consultedCPF.Cpf = params["cpf"]
+		consultedCPF.Cpf = val
 		consultedCPF.Date = time.Now()
 		consultedCPF.Description = "Last customer purchase by CPF."
 		daoConsultedCPFs.Insert(consultedCPF)
