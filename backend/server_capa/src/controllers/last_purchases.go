@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/dao"
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
@@ -20,18 +21,16 @@ func AllLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJSON(w, http.StatusOK, lastPurchases)
-}
 
-// FindLastPurchasesEndpoint - List all data financial transactions by cpf
-func FindLastPurchasesEndpoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	params := mux.Vars(r)
-	movie, err := daoLastPurchases.FindByID(params["id"])
-	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid LastPurchase ID")
-		return
+	if val, ok := params["cpf"]; ok {
+		var consultedCPF ConsultedCPF
+		consultedCPF.Cpf = params["cpf"]
+		consultedCPF.Date = time.Now()
+		consultedCPF.Description = "Last customer purchase by CPF."
+		daoConsultedCPFs.Insert(consultedCPF)
 	}
-	respondWithJSON(w, http.StatusOK, movie)
+
+	respondWithJSON(w, http.StatusOK, lastPurchases)
 }
 
 // CreateLastPurchasesEndPoint a new movie

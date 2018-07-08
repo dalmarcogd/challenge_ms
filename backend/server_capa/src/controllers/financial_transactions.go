@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/dao"
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
@@ -21,18 +22,14 @@ func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, ne
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJSON(w, http.StatusOK, financialTransactions)
-}
-
-// FindFinancialTransactionsEndpoint - List all data financial transactions by cpf
-func FindFinancialTransactionsEndpoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	params := mux.Vars(r)
-	financialTransaction, err := daoFinancialTransactions.FindByID(params["id"])
-	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid FinancialTransaction ID")
-		return
+	if val, ok := params["cpf"]; ok {
+		var consultedCPF ConsultedCPF
+		consultedCPF.Cpf = params["cpf"]
+		consultedCPF.Date = time.Now()
+		consultedCPF.Description = "Financial transactions by CPF."
 	}
-	respondWithJSON(w, http.StatusOK, financialTransaction)
+
+	respondWithJSON(w, http.StatusOK, financialTransactions)
 }
 
 // CreateFinancialTransactionsEndPoint a new financialTransaction
