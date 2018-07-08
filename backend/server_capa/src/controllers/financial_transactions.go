@@ -59,12 +59,13 @@ func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 		lastPurchase.ID = bson.NewObjectId()
 		var isNew = true
 		if len(lastPurchases) > 0 {
-			lastPurchase = lastPurchases[:0][0]
+			lastPurchase = lastPurchases[:1][0]
 			isNew = false
 		}
 
 		lastPurchase.Cpf = financialTransaction.Cpf
 		lastPurchase.Date = financialTransaction.Date
+		lastPurchase.Value = financialTransaction.Value
 		lastPurchase.Description = financialTransaction.Description
 		lastPurchase.PaymentType = financialTransaction.PaymentType
 
