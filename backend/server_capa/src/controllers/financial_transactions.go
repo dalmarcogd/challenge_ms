@@ -105,10 +105,10 @@ func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 
 // DeleteFinancialTransactionsEndPoint an existing financialTransaction
 func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	defer r.Body.Close()
-	var financialTransaction FinancialTransaction
-	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+	params := mux.Vars(r)
+	financialTransaction, err := daoFinancialTransactions.FindByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid FinancialTransaction ID")
 		return
 	}
 	if err := daoFinancialTransactions.Delete(financialTransaction); err != nil {

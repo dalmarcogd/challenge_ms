@@ -68,12 +68,12 @@ func UpdateLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next ht
 // DeleteLastPurchasesEndPoint an existing movie
 func DeleteLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
-	var movie LastPurchase
-	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
+	var lastPurchase LastPurchase
+	if err := json.NewDecoder(r.Body).Decode(&lastPurchase); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := daoLastPurchases.Delete(movie); err != nil {
+	if err := daoLastPurchases.Delete(lastPurchase); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
