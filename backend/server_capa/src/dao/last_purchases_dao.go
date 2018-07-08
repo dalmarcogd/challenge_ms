@@ -26,7 +26,7 @@ func (m *LastPurchasesDAO) Connect() {
 // FindAll list of LastPurchases
 func (m *LastPurchasesDAO) FindAll() ([]LastPurchase, error) {
 	var LastPurchases []LastPurchase
-	err := db.C(COLLECTION).Find(bson.M{}).All(&LastPurchases)
+	err := db.C("LastPurchases").Find(bson.M{}).All(&LastPurchases)
 	return LastPurchases, err
 }
 
