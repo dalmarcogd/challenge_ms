@@ -51,11 +51,15 @@ func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 
 	if financialTransaction.Type == "Debit" && financialTransaction.PaymentType == "CreditCard" {
 		lastPurchases, err := daoLastPurchases.FindByQuery(bson.M{"Cpf": financialTransaction.Cpf})
+		if err != nil {
+			fmt.Println("Not found last customer purchase by cpf: ", financialTransaction.Cpf)
+		}
+
 		var lastPurchase LastPurchase
 		lastPurchase.ID = bson.NewObjectId()
 		var isNew = true
 		if len(lastPurchases) > 0 {
-			lastPurchase = lastPurchases[:0]
+			lastPurchase = lastPurchases[:0][0]
 			isNew = false
 		}
 
