@@ -12,7 +12,6 @@ import (
 )
 
 var daoFinancialTransactions = FinancialTransactionsDAO{}
-var daoLastPurchases = LastPurchasesDAO{}
 
 // AllFinancialTransactionsEndPoint - List all data financial transactions
 func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
