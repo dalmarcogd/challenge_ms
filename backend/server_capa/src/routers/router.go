@@ -9,5 +9,6 @@ func InitRoutes() *mux.Router {
 	router := mux.NewRouter()
 	router = SetFinancialTransationsRoutes(router)
 	router = SetLastPurchasesRoutes(router)
+	router = SetConsultedCPFRoutes(router)
 	return router
 }
