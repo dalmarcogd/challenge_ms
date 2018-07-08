@@ -43,6 +43,7 @@ func (m *LastPurchasesDAO) FindByQuery(query interface{}) ([]LastPurchase, error
 	var lastPurchases []LastPurchase
 	fmt.Println(query)
 	err := db.C("LastPurchases").Find(&query).All(&lastPurchases)
+	fmt.Println(lastPurchases)
 	return lastPurchases, err
 }
 
