@@ -5,8 +5,6 @@ import (
 	"net/http"
 
 	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/config"
-	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/dao"
-	. "github.com/dalmarcogd/challenge_ms/backend/server_capa/src/models"
 )
 
 var config = Config{}
