@@ -11,12 +11,11 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-var config = Config{}
-var dao = FinancialTransactionsDAO{}
+var daoFinancialTransactions = FinancialTransactionsDAO{}
 
 // AllFinancialTransactionsEndPoint - List all data financial transactions
 func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	financialTransactions, err := dao.FindAll()
+	financialTransactions, err := daoFinancialTransactions.FindAll()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -27,15 +26,15 @@ func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, ne
 // FindFinancialTransactionsEndpoint - List all data financial transactions by cpf
 func FindFinancialTransactionsEndpoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	params := mux.Vars(r)
-	financialTransaction, err := dao.FindByID(params["id"])
+	financialTransaction, err := daoFinancialTransactions.FindByID(params["id"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid FinancialTransaction ID")
 		return
 	}
-	respondWithJSON(w, http.StatusOK, movie)
+	respondWithJSON(w, http.StatusOK, financialTransaction)
 }
 
-// CreateFinancialTransactionsEndPoint a new movie
+// CreateFinancialTransactionsEndPoint a new financialTransaction
 func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
 	var financialTransaction FinancialTransaction
@@ -45,14 +44,14 @@ func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 	}
 
 	financialTransaction.ID = bson.NewObjectId()
-	if err := dao.Insert(financialTransaction); err != nil {
+	if err := daoFinancialTransactions.Insert(financialTransaction); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	respondWithJSON(w, http.StatusCreated, financialTransaction)
 }
 
-// UpdateFinancialTransactionsEndPoint update an existing movie
+// UpdateFinancialTransactionsEndPoint update an existing financialTransaction
 func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
 	var financialTransaction FinancialTransaction
@@ -60,14 +59,14 @@ func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.Update(financialTransaction); err != nil {
+	if err := daoFinancialTransactions.Update(financialTransaction); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-// DeleteFinancialTransactionsEndPoint an existing movie
+// DeleteFinancialTransactionsEndPoint an existing financialTransaction
 func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
 	var movie FinancialTransaction
@@ -75,28 +74,17 @@ func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request,
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.Delete(movie); err != nil {
+	if err := daoFinancialTransactions.Delete(movie); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-func respondWithError(w http.ResponseWriter, code int, msg string) {
-	respondWithJSON(w, code, map[string]string{"error": msg})
-}
-
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	response, _ := json.Marshal(payload)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	w.Write(response)
-}
-
 func init() {
 	config.Read()
 
-	dao.Server = config.Server
-	dao.Database = config.Database
-	dao.Connect()
+	daoFinancialTransactions.Server = config.Server
+	daoFinancialTransactions.Database = config.Database
+	daoFinancialTransactions.Connect()
 }

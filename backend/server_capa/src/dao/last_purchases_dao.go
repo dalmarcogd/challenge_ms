@@ -14,13 +14,6 @@ type LastPurchasesDAO struct {
 	Database string
 }
 
-var db *mgo.Database
-
-const (
-	// COLLECTION name of collection
-	COLLECTION = "LastPurchases"
-)
-
 // Connect Establish a connection to database
 func (m *LastPurchasesDAO) Connect() {
 	session, err := mgo.Dial(m.Server)
@@ -37,27 +30,27 @@ func (m *LastPurchasesDAO) FindAll() ([]LastPurchase, error) {
 	return LastPurchases, err
 }
 
-// Find a movie by its id
+// FindByID a movie by its id
 func (m *LastPurchasesDAO) FindByID(id string) (LastPurchase, error) {
 	var lastPurchase LastPurchase
-	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&lastPurchase)
-	return LastPurchase, err
+	err := db.C("LastPurchases").FindId(bson.ObjectIdHex(id)).One(&lastPurchase)
+	return lastPurchase, err
 }
 
 // Insert a LastPurchase into database
 func (m *LastPurchasesDAO) Insert(LastPurchase LastPurchase) error {
-	err := db.C(COLLECTION).Insert(&LastPurchase)
+	err := db.C("LastPurchases").Insert(&LastPurchase)
 	return err
 }
 
 // Delete an existing LastPurchase
 func (m *LastPurchasesDAO) Delete(LastPurchase LastPurchase) error {
-	err := db.C(COLLECTION).Remove(&LastPurchase)
+	err := db.C("LastPurchases").Remove(&LastPurchase)
 	return err
 }
 
 // Update an existing LastPurchase
 func (m *LastPurchasesDAO) Update(LastPurchase LastPurchase) error {
-	err := db.C(COLLECTION).UpdateId(LastPurchase.ID, &LastPurchase)
+	err := db.C("LastPurchases").UpdateId(LastPurchase.ID, &LastPurchase)
 	return err
 }

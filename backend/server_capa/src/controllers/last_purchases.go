@@ -11,12 +11,11 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-var config = Config{}
-var dao = LastPurchasesDAO{}
+var daoLastPurchases = LastPurchasesDAO{}
 
 // AllLastPurchasesEndPoint - List all data financial transactions
 func AllLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	lastPurchases, err := dao.FindAll()
+	lastPurchases, err := daoLastPurchases.FindAll()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -27,7 +26,7 @@ func AllLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.
 // FindLastPurchasesEndpoint - List all data financial transactions by cpf
 func FindLastPurchasesEndpoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	params := mux.Vars(r)
-	movie, err := dao.FindByID(params["id"])
+	movie, err := daoLastPurchases.FindByID(params["id"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid LastPurchase ID")
 		return
@@ -44,7 +43,7 @@ func CreateLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next ht
 		return
 	}
 	lastPurchase.ID = bson.NewObjectId()
-	if err := dao.Insert(lastPurchase); err != nil {
+	if err := daoLastPurchases.Insert(lastPurchase); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -59,7 +58,7 @@ func UpdateLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next ht
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.Update(lastPurchase); err != nil {
+	if err := daoLastPurchases.Update(lastPurchase); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -74,28 +73,17 @@ func DeleteLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next ht
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.Delete(movie); err != nil {
+	if err := daoLastPurchases.Delete(movie); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-func respondWithError(w http.ResponseWriter, code int, msg string) {
-	respondWithJSON(w, code, map[string]string{"error": msg})
-}
-
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	response, _ := json.Marshal(payload)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	w.Write(response)
-}
-
 func init() {
 	config.Read()
 
-	dao.Server = config.Server
-	dao.Database = config.Database
-	dao.Connect()
+	daoLastPurchases.Server = config.Server
+	daoLastPurchases.Database = config.Database
+	daoLastPurchases.Connect()
 }

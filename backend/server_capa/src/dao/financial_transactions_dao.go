@@ -14,13 +14,6 @@ type FinancialTransactionsDAO struct {
 	Database string
 }
 
-var db *mgo.Database
-
-const (
-	// COLLECTION name of collection
-	COLLECTION = "FinancialTransactions"
-)
-
 // Connect Establish a connection to database
 func (m *FinancialTransactionsDAO) Connect() {
 	session, err := mgo.Dial(m.Server)
@@ -33,31 +26,31 @@ func (m *FinancialTransactionsDAO) Connect() {
 // FindAll list of FinancialTransactions
 func (m *FinancialTransactionsDAO) FindAll() ([]FinancialTransaction, error) {
 	var financialTransactions []FinancialTransaction
-	err := db.C(COLLECTION).Find(bson.M{}).All(&financialTransactions)
+	err := db.C("FinancialTransactions").Find(bson.M{}).All(&financialTransactions)
 	return financialTransactions, err
 }
 
-// Find a movie by its id
+// FindByID a FinancialTransaction by its id
 func (m *FinancialTransactionsDAO) FindByID(id string) (FinancialTransaction, error) {
 	var financialTransaction FinancialTransaction
-	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&financialTransaction)
+	err := db.C("FinancialTransactions").FindId(bson.ObjectIdHex(id)).One(&financialTransaction)
 	return financialTransaction, err
 }
 
 // Insert a FinancialTransaction into database
-func (m *FinancialTransactionsDAO) Insert(FinancialTransaction FinancialTransaction) error {
-	err := db.C(COLLECTION).Insert(&FinancialTransaction)
+func (m *FinancialTransactionsDAO) Insert(financialTransaction FinancialTransaction) error {
+	err := db.C("FinancialTransactions").Insert(&financialTransaction)
 	return err
 }
 
 // Delete an existing FinancialTransaction
-func (m *FinancialTransactionsDAO) Delete(FinancialTransaction FinancialTransaction) error {
-	err := db.C(COLLECTION).Remove(&FinancialTransaction)
+func (m *FinancialTransactionsDAO) Delete(financialTransaction FinancialTransaction) error {
+	err := db.C("FinancialTransactions").Remove(&financialTransaction)
 	return err
 }
 
 // Update an existing FinancialTransaction
-func (m *FinancialTransactionsDAO) Update(FinancialTransaction FinancialTransaction) error {
-	err := db.C(COLLECTION).UpdateId(FinancialTransaction.ID, &FinancialTransaction)
+func (m *FinancialTransactionsDAO) Update(financialTransaction FinancialTransaction) error {
+	err := db.C("FinancialTransactions").UpdateId(financialTransaction.ID, &financialTransaction)
 	return err
 }
