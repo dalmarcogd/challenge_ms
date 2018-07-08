@@ -28,7 +28,7 @@ func SetFinancialTransationsRoutes(router *mux.Router) *mux.Router {
 			negroni.HandlerFunc(controllers.UpdateFinancialTransactionsEndPoint),
 		)).Methods("PUT")
 
-	router.Handle("/financial-transactions",
+	router.Handle("/financial-transactions/{id}",
 		negroni.New(
 			negroni.HandlerFunc(controllers.DeleteFinancialTransactionsEndPoint),
 		)).Methods("DELETE")

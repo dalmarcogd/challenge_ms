@@ -12,65 +12,64 @@ import (
 )
 
 var config = Config{}
-var dao = FinancialTransactionsDAO{}
+var dao = LastPurchasesDAO{}
 
-// AllFinancialTransactionsEndPoint - List all data financial transactions
-func AllFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	financialTransactions, err := dao.FindAll()
+// AllLastPurchasesEndPoint - List all data financial transactions
+func AllLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	lastPurchases, err := dao.FindAll()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJSON(w, http.StatusOK, financialTransactions)
+	respondWithJSON(w, http.StatusOK, lastPurchases)
 }
 
-// FindFinancialTransactionsEndpoint - List all data financial transactions by cpf
-func FindFinancialTransactionsEndpoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+// FindLastPurchasesEndpoint - List all data financial transactions by cpf
+func FindLastPurchasesEndpoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	params := mux.Vars(r)
-	financialTransaction, err := dao.FindByID(params["id"])
+	movie, err := dao.FindByID(params["id"])
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid FinancialTransaction ID")
+		respondWithError(w, http.StatusBadRequest, "Invalid LastPurchase ID")
 		return
 	}
 	respondWithJSON(w, http.StatusOK, movie)
 }
 
-// CreateFinancialTransactionsEndPoint a new movie
-func CreateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+// CreateLastPurchasesEndPoint a new movie
+func CreateLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
-	var financialTransaction FinancialTransaction
-	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
+	var lastPurchase LastPurchase
+	if err := json.NewDecoder(r.Body).Decode(&lastPurchase); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-
-	financialTransaction.ID = bson.NewObjectId()
-	if err := dao.Insert(financialTransaction); err != nil {
+	lastPurchase.ID = bson.NewObjectId()
+	if err := dao.Insert(lastPurchase); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJSON(w, http.StatusCreated, financialTransaction)
+	respondWithJSON(w, http.StatusCreated, lastPurchase)
 }
 
-// UpdateFinancialTransactionsEndPoint update an existing movie
-func UpdateFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+// UpdateLastPurchasesEndPoint update an existing movie
+func UpdateLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
-	var financialTransaction FinancialTransaction
-	if err := json.NewDecoder(r.Body).Decode(&financialTransaction); err != nil {
+	var lastPurchase LastPurchase
+	if err := json.NewDecoder(r.Body).Decode(&lastPurchase); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.Update(financialTransaction); err != nil {
+	if err := dao.Update(lastPurchase); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-// DeleteFinancialTransactionsEndPoint an existing movie
-func DeleteFinancialTransactionsEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+// DeleteLastPurchasesEndPoint an existing movie
+func DeleteLastPurchasesEndPoint(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	defer r.Body.Close()
-	var movie FinancialTransaction
+	var movie LastPurchase
 	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
