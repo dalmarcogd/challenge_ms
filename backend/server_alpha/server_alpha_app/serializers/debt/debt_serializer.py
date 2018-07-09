@@ -8,3 +8,6 @@ class DebtSerializer(serializers.BaseSerializer):
     class Meta:
         model = models.DebtModel
         fields = '__all__'
+        extra_kwargs = {
+            'id': {'read_only': False, 'required': False},
+        }

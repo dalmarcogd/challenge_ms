@@ -18,3 +18,4 @@ class CustomerModel(server_alpha_app_models.BaseModel):
     
 
     objects = managers.CustomerManager()
+    

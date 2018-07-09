@@ -10,6 +10,7 @@ class CustomerDocument(documents.BaseDocument):
         object_name = 'Customer'
 
     cpf = fields.StringField(required=True, max_length=11, min_length=11, unique=True)
+    date_birth = fields.DateTimeField(required=True, )
     name = fields.StringField(required=True, max_length=100)
     address = fields.StringField(required=True, max_length=150)
     patrimonies = fields.EmbeddedDocumentListField(documents.PatrimonyDocument)

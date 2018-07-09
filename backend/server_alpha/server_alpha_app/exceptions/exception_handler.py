@@ -22,9 +22,17 @@ def custom_exception_handler(exc, context):
                     for v in value:
                         if v == 'A user with that username already exists.':
                             errors.append('Usuário já existente para este e-mail.')
-
-                if value is 'user model with this username already exists.':
-                    errors.append('Usuário já existente para este e-mail.')
+                        elif v == 'This field is required.':
+                            errors.append('Field \'{}\' is required.'.format(key))
+                        else:
+                            errors.append(v)
+                else:
+                    if value == 'user model with this username already exists.':
+                        errors.append('Usuário já existente para este e-mail.')
+                    elif value == 'This field is required.':
+                        errors.append('Field \'{}\' is required.'.format(key))
+                    else:
+                        errors.append(value)
         resp.data =  {
             'type': exc.default_code,
             'message': 'Error',

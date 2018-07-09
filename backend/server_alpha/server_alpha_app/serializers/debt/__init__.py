@@ -1,1 +1,1 @@
-from .customer_serializer import *
+from .debt_serializer import *

@@ -8,11 +8,8 @@ class DebtModel(server_alpha_app_models.BaseModel):
     """
     class Meta:
         db_table = "debt"
-        indexes = [
-            models.Index(fields=['customer'], name='customer_idx'),
-        ]
 
-    amount = models.CharField(max_length=11, unique=True)
+    value = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
     customer = models.ForeignKey(server_alpha_app_models.CustomerModel, on_delete=models.CASCADE, related_name='debts')
 
