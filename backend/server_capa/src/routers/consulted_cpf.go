@@ -9,7 +9,7 @@ import (
 // SetConsultedCPFRoutes - config endpoints about consulted cpf
 func SetConsultedCPFRoutes(router *mux.Router) *mux.Router {
 
-	router.Handle("/consutled-cpf/{cpf}",
+	router.Handle("/consulted-cpf/{cpf}",
 		negroni.New(
 			negroni.HandlerFunc(controllers.AllConsultedCPFsEndPoint),
 		)).Methods("GET")
