@@ -1,0 +1,20 @@
+
+  .example-margin {
+    margin: 0 10px;
+  }
+
+  mat-progress-spinner  {
+    margin: 10% auto auto auto !important;
+  }
+
+  mat-dialog-actions {
+    float: right;
+  }
+
+  mat-footer-cell {
+    font-weight: bold;
+  }
+
+  mat-header-cell {
+    font-weight: bold;
+  }

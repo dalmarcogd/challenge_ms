@@ -1,0 +1,70 @@
+<mat-card>
+  <mat-card-content>
+    <mat-progress-spinner *ngIf="loading" class="example-margin" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-spinner>
+
+    <div *ngIf="!loading">
+
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field>
+            <input matInput placeholder="CPF" mask='000.000.000-00' type="text" [(ngModel)]="cpf">
+          </mat-form-field>
+          <button mat-button (click)="getCustomerDossie()">
+            <mat-icon>save_alt</mat-icon>
+            Solicitar Dossiê
+          </button>
+        </mat-list-item>
+
+      </mat-list>
+      <mat-table #table matSort [dataSource]="dataSource">
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="cpf">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>CPF</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.cpf | cpf}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="date_birth">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Data de Nascimento</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.date_birth | date:'dd/MM/yyyy'}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Endereço</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.address}}</mat-cell>
+        </ng-container>
+
+        <!-- Star Column -->
+        <ng-container matColumnDef="id" stickyEnd>
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-button (click)="reload()">
+              <mat-icon>refresh</mat-icon>
+              Recarregar
+            </button>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+
+            <button mat-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialog(element.id)">Detalhes</button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </div>
+  </mat-card-content>
+</mat-card>

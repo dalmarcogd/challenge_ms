@@ -1,0 +1,165 @@
+<mat-card>
+  <mat-card-content>
+    <mat-progress-spinner *ngIf="loading" class="example-margin" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-spinner>
+
+    <div *ngIf="!loading">
+      <mat-list>
+        <mat-list-item>Dossiê</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item></mat-list-item>
+      </mat-list>
+      <form>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header (opened)="true">
+              <mat-panel-title>
+                Dados do Cliente
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-list>
+              <mat-list-item>
+                <mat-form-field>
+                  <input matInput placeholder="Nome" [(ngModel)]="customerDossier.name" [ngModelOptions]="{standalone: true}" readonly>
+                </mat-form-field>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-form-field>
+                  <input matInput placeholder="CPF" [(ngModel)]="customerDossier.cpf" mask="000.000.000-00" [dropSpecialCharacters]="true" type="text" [ngModelOptions]="{standalone: true}" readonly>
+                </mat-form-field>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-form-field>
+                  <input matInput placeholder="Data de Nascimento" [(ngModel)]="customerDossier.date_birth" [ngModelOptions]="{standalone: true}"
+                    readonly>
+                </mat-form-field>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-form-field>
+                  <input matInput placeholder="Endereço" [(ngModel)]="customerDossier.address" [ngModelOptions]="{standalone: true}" readonly>
+                </mat-form-field>
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Dívidas
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-table [dataSource]="dataSourceDebts">
+              <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.date | date:'dd/MM/yyyy'}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef>{{getTotalDebts()}}</mat-footer-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumnsDebts; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsDebts"></mat-row>
+              <mat-row mat-footer-row *matFooterRowDef="displayedColumnsDebts"></mat-row>
+            </mat-table>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Patrimônios
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-table [dataSource]="dataSourcePatrimonies">
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef>{{getTotalPatrimonies()}}</mat-footer-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumnsPatrimonies; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsPatrimonies"></mat-row>
+              <mat-row mat-footer-row *matFooterRowDef="displayedColumnsPatrimonies"></mat-row>
+            </mat-table>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Transações Financeiras
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-table [dataSource]="dataSourceFinancialTransactions">
+
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.date | date:'dd/MM/yyyy'}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="type_transaction">
+                <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.type_transaction}}</mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumnsFinancialTransactions; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsFinancialTransactions"></mat-row>
+            </mat-table>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Fontes de Renda
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-table [dataSource]="dataSourceSourcesIncome">
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef>{{getTotalSourcesIncome()}}</mat-footer-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumnsSourcesIncome; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsSourcesIncome"></mat-row>
+              <mat-row mat-footer-row *matFooterRowDef="displayedColumnsSourcesIncome"></mat-row>
+            </mat-table>
+
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </form>
+    </div>
+    <mat-dialog-actions >
+      <button class="mat-raised-button pull-right" (click)="close()">Fechar</button>
+    </mat-dialog-actions>
+  </mat-card-content>
+</mat-card>
