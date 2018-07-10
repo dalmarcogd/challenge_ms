@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"beta_db.customer_document"},{"v":2,"unique":true,"key":{"cpf":1},"name":"cpf_1","ns":"beta_db.customer_document","background":false,"sparse":false},{"v":2,"key":{"_cls":1},"name":"_cls_1","ns":"beta_db.customer_document","background":false}],"uuid":"ca10502300dc436bbcc1cdb64c95101e"}
