@@ -7,7 +7,3 @@ class CustomerViewSet(view_sets.BaseDocumentViewSet):
     """
     serializer_class = serializers.CustomerSerializer
     queryset = models.CustomerDocument.objects.all()
-
-    def get_queryset(self):
-        return models.CustomerDocument.objects.all()
-    

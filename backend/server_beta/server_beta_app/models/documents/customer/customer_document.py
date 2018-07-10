@@ -15,5 +15,3 @@ class CustomerDocument(documents.BaseDocument):
     address = fields.StringField(required=True, max_length=150)
     patrimonies = fields.EmbeddedDocumentListField(documents.PatrimonyDocument)
     sources_income = fields.EmbeddedDocumentListField(documents.SourceIncomeDocument)
-
-    objects = managers.CustomerManager()
