@@ -78,6 +78,8 @@ O servidor Delta consome os servidores acima formando um dossiê dos dados de cl
     },
 ]
 
+* Anexo ao projeto estão as collections do Postman para teste dos endpoints.
+
 <br>Frontend:
 - A aplicação web consume o servidor Delta disponibilizando os dados consumidos que formaram o dossiê.
 
