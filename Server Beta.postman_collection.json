@@ -1,0 +1,431 @@
+{
+	"info": {
+		"_postman_id": "bd70389a-68a2-4761-ae9b-4e8a916b2a87",
+		"name": "Server Beta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "customers",
+			"description": "",
+			"item": [
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer a9rP160ur7Wh8vDqiCswCQ1zGJzN7i"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n        \"patrimonies\": [\n            {\n                \"value\": \"1000.00\",\n                \"date\": \"2018-07-07\",\n                \"description\":\"Carro\"\n            }\n        ],\n        \"sources_income\": [\n            {\n                \"value\": \"1000.00\",\n                \"date\": \"2018-07-07\",\n                \"description\":\"Salário\"\n            }\n        ],\n        \"cpf\": \"06934332991\",\n        \"name\": \"Guilherme Dalmarco\",\n        \"address\": \"Rua Chapeco\",\n        \"date_birth\": \"2018-07-09 19:11:33.800953-03\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8002/api/customers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"api",
+								"customers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer r1nicHXARY9mxj6LdXUdX82PPiJKrw"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n        \"id\": 1,\n        \"debts\": [\n            {\n                \"id\": 1,\n                \"value\": \"1000.02\",\n                \"date\": \"2018-07-01\",\n                \"customer\": 2\n            }\n        ],\n        \"cpf\": \"06934332997\",\n        \"name\": \"Guilherme Dalmarco\",\n        \"address\": \"Rua Chapeco\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8001/api/customers/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"api",
+								"customers",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a9rP160ur7Wh8vDqiCswCQ1zGJzN7i"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5b3e4091c43bfd2b780afeb9\",\n\t\"description\": \"crédito bancário\",\n\t\"date\": \"2011-10-05T14:48:00.000Z\",\n\t\"Cpf\": \"06934332997\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8002/api/customers/?cpf=06934332991",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"api",
+								"customers",
+								""
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "06934332991"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "5b3e4176c43bfd2b780afebb",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer r1nicHXARY9mxj6LdXUdX82PPiJKrw"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5b3e4091c43bfd2b780afeb9\",\n\t\"description\": \"crédito bancário\",\n\t\"date\": \"2011-10-05T14:48:00.000Z\",\n\t\"Cpf\": \"06934332997\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8001/api/customers/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"api",
+								"customers",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer r1nicHXARY9mxj6LdXUdX82PPiJKrw"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8001/api/customers/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"api",
+								"customers",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "da7388bb-77f0-4da4-8299-1e42cf099c1e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "42dc7fd4-186e-4027-8ee9-b5187bb469dd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"description": "",
+			"item": [
+				{
+					"name": "Client",
+					"description": "",
+					"item": [
+						{
+							"name": "Oauth Token Client",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "kUlmqLOK13Bik1Z6CPtVMEJjUClXw4CXKyrSqzCP",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "fhNg6KGJB2gkYGx0eucpoUUx8Rmzyw6gqSVv0hgpQjh16y283shCVSfhumBEYxHlvrhAL8WFuxDM8a1wbCY8J50A8zwRogYBYKcId9xUM7PdETOVQ1qY36wgOSdNkxcp",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "read write",
+											"description": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8001/api/oauth/token/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"api",
+										"oauth",
+										"token",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "User",
+					"description": "",
+					"item": [
+						{
+							"name": "Oauth Refresh User",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "6nBxcNVLsl4NxsejVf0ScNYmsDQRY3SWLvvYDQCJ",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "slbqxEie2oBG3MDtFzYZDwGKv8zSuzUmEexKtuQlbEqOhb6YTqI8oMQQXvqiOwUJXo9RYrLFQkZg97D6kHMxPBV5ChGFljpzh5sblqxkFVxQooBEI71VTS7G6e1Lvch2",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "refresh_token",
+											"value": "xuhkgOV603kLmQKEGRaJBt6lWkrGmL",
+											"description": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8002/api/oauth/token/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8002",
+									"path": [
+										"api",
+										"oauth",
+										"token",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Oauth Token User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "grant_type",
+											"value": "password",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "bApv4CeLtB1ln25vWvcZp3l9bM35qa8k6IVDu83K",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "eYK9GLBiOl9nRILtH7vur9AAgkNHL51EInqVhvwB5JpCMZBFsxkr5qJ0dVCgEVgcCXjS4pTsnX16USJjWqduSUzufCXJnodjuXk7Xz2YmUkvJa5Xpv3tSMH27uI1v5gc",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "read write",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "delta",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "82fxhf27",
+											"description": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8002/api/oauth/token/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"api",
+										"oauth",
+										"token",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c210c9f8-18c7-4a04-bbe1-5aedfcfccfc5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "37e5a69a-6b9e-48ff-ad7f-dd80a8003b2c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

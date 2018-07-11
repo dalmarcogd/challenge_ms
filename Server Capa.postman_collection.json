@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "87dec915-3215-4bca-90c8-1653edc095f8",
+		"name": "Server Capa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "financial-transations",
+			"description": "",
+			"item": [
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"debito bancário\",\n    \"value\": 12.00,\n    \"date\": \"2011-10-05T11:48:00-03:00\",\n    \"cpf\": \"06934332997\",\n    \"type\": \"Debit\",\n    \"PaymentType\": \"DebitCard\"\n},"
+						},
+						"url": {
+							"raw": "http://localhost:8003/financial-transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8003",
+							"path": [
+								"financial-transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"5b429a20c43bfd553c1334b1\",\n    \"description\": \"debito bancário\",\n    \"value\": 15,\n    \"date\": \"2011-10-05T11:48:00-03:00\",\n    \"cpf\": \"06934332991\",\n    \"type\": \"Debit\",\n    \"PaymentType\": \"DebitCard\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8003/financial-transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8003",
+							"path": [
+								"financial-transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5b3e4091c43bfd2b780afeb9\",\n\t\"description\": \"crédito bancário\",\n\t\"date\": \"2011-10-05T14:48:00.000Z\",\n\t\"Cpf\": \"06934332997\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8003/financial-transactions/06934332997",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8003",
+							"path": [
+								"financial-transactions",
+								"06934332997"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"5b3e4091c43bfd2b780afeb9\",\n        \"description\": \"crédito bancário\",\n        \"date\": \"2011-10-05T11:48:00-03:00\",\n        \"cpf\": \"06934332997\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8003/financial-transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8003",
+							"path": [
+								"financial-transactions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "last-purchases",
+			"description": "",
+			"item": [
+				{
+					"name": "GET CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5b3e4091c43bfd2b780afeb9\",\n\t\"description\": \"crédito bancário\",\n\t\"date\": \"2011-10-05T14:48:00.000Z\",\n\t\"Cpf\": \"06934332997\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8003/last-purchases/06934332991",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8003",
+							"path": [
+								"last-purchases",
+								"06934332991"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "consulted-cpf",
+			"description": "",
+			"item": [
+				{
+					"name": "GET CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5b3e4091c43bfd2b780afeb9\",\n\t\"description\": \"crédito bancário\",\n\t\"date\": \"2011-10-05T14:48:00.000Z\",\n\t\"Cpf\": \"06934332997\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8003/consutled-cpf/06934332991",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8003",
+							"path": [
+								"consutled-cpf",
+								"06934332991"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
