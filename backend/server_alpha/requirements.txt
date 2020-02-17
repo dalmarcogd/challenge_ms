@@ -69,7 +69,7 @@ python-decouple==3.3
 pytz==2019.3
 PyYAML==5.3
 requests==2.22.0
-requests-oauthlib==0.8.0
+requests-oauthlib==1.3.0
 requirements==0.1
 rest-condition==1.0.3
 rsa==3.4.2
