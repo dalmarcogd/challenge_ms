@@ -26,7 +26,7 @@ elasticsearch==7.5.1
 elasticsearch-dsl==7.1.0
 Faker==4.0.0
 google-api-core==1.16.0
-google-api-python-client==1.6.6
+google-api-python-client==1.7.11
 google-auth==1.4.1
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.2.0
