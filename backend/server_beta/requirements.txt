@@ -24,7 +24,7 @@ django-storages==1.9.1
 djangorestframework==3.11.0
 elasticsearch==7.5.1
 elasticsearch-dsl==7.1.0
-Faker==0.8.8
+Faker==4.0.0
 google-api-core==1.2.0
 google-api-python-client==1.6.6
 google-auth==1.4.1
