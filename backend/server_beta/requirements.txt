@@ -47,7 +47,7 @@ mccabe==0.6.1
 mixer==6.0.1
 mongoengine==0.15.0
 more-itertools==4.2.0
-Naked==0.1.31
+Naked==0.1.32
 oauth2-provider==0.0
 oauth2client==4.1.2
 oauthlib==2.0.7
