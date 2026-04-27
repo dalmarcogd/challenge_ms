@@ -81,4 +81,4 @@ text-unidecode==1.2
 uritemplate==3.0.0
 urllib3==1.22
 virtualenv==15.1.0
-wrapt==1.10.11
+wrapt==2.1.2
